@@ -1,0 +1,23 @@
+Alpha - 1
+
+Beta - 2
+
+Delta - 3 
+
+Epsilon - 4
+
+Eta - 5
+
+Gamma - 6
+
+Lambda - 7
+
+lota - 8
+
+Mu - 9
+
+omicron - 10
+
+probable - 11
+
+zeta - 12
