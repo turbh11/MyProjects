@@ -1,0 +1,232 @@
+/* Mobile-First CSS for CRM System */
+
+
+/* Global mobile optimizations */
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* Allow text selection for inputs and editable content */
+
+input,
+textarea,
+[contenteditable="true"] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+
+/* Improved scrolling on iOS */
+
+body,
+.MuiDrawer-paper {
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* Better touch targets - minimum 44px */
+
+.MuiButton-root,
+.MuiIconButton-root,
+.MuiFab-root {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+
+/* Mobile-specific table improvements */
+
+@media (max-width: 768px) {
+    .mobile-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+    .mobile-table-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+    .mobile-table-wrapper::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    .mobile-table-wrapper::-webkit-scrollbar-thumb {
+        background: #1976d2;
+        border-radius: 3px;
+    }
+    .mobile-table {
+        min-width: 800px;
+        /* Force horizontal scroll */
+        font-size: 0.875rem;
+    }
+    .mobile-table .MuiTableCell-root {
+        padding: 12px 8px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        min-width: 120px;
+    }
+    .mobile-table .MuiTableCell-head {
+        font-weight: 600;
+        background-color: #1976d2;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 2px solid #1565c0;
+    }
+    /* Compact mode for smaller screens */
+    .mobile-compact-table .MuiTableCell-root {
+        padding: 8px 4px;
+        font-size: 0.75rem;
+        min-width: 80px;
+    }
+}
+
+
+/* Card layouts for mobile */
+
+@media (max-width: 600px) {
+    .mobile-card-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .mobile-card {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.2s ease;
+    }
+    .mobile-card:active {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+    }
+}
+
+
+/* Bottom navigation safe area */
+
+.mobile-bottom-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+
+/* Status bar safe area */
+
+.mobile-top-safe {
+    padding-top: env(safe-area-inset-top);
+}
+
+
+/* Pull-to-refresh styling */
+
+.mobile-pull-refresh {
+    overscroll-behavior-y: contain;
+}
+
+
+/* Loading states optimized for mobile */
+
+.mobile-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* Mobile form optimizations */
+
+@media (max-width: 600px) {
+    .mobile-form-container {
+        padding: 16px;
+    }
+    .mobile-form-field {
+        margin-bottom: 16px;
+    }
+    .mobile-form-field .MuiOutlinedInput-root {
+        font-size: 16px;
+        /* Prevents zoom on iOS */
+    }
+    .mobile-form-actions {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 16px;
+        border-top: 1px solid #e0e0e0;
+        margin: 0 -16px -16px;
+    }
+}
+
+
+/* Swipe gestures indication */
+
+.mobile-swipeable {
+    position: relative;
+}
+
+.mobile-swipeable::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ccc, transparent);
+    border-radius: 1px;
+}
+
+
+/* RTL optimizations for Hebrew */
+
+[dir="rtl"] .mobile-swipeable::before {
+    right: auto;
+    left: 8px;
+}
+
+
+/* Accessibility improvements */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+
+/* High contrast mode support */
+
+@media (prefers-contrast: high) {
+    .mobile-card {
+        border: 2px solid #000;
+    }
+    .MuiButton-contained {
+        border: 2px solid;
+    }
+}
+
+
+/* Dark mode optimizations */
+
+@media (prefers-color-scheme: dark) {
+    .mobile-card {
+        background-color: #1e1e1e;
+        color: #ffffff;
+    }
+    .mobile-table .MuiTableCell-head {
+        background-color: #2e2e2e;
+    }
+}

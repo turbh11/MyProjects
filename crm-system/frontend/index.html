@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="CRM מערכת ניהול" />
+    <meta name="apple-mobile-web-app-title" content="CRM System" />
+    <meta name="description" content="מערכת ניהול לקוחות ופרויקטים מתקדמת" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#1976d2" />
+    <meta name="msapplication-TileColor" content="#1976d2" />
+
+    <!-- Icons for PWA -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <title>מערכת ניהול פרויקטים</title>
+    <script>
+        // Force cache bypass
+        window.addEventListener('load', function() {
+            // Add timestamp to all CSS and JS links to prevent caching
+            const links = document.querySelectorAll('link[rel="stylesheet"], script[src]');
+            const timestamp = '?v=' + Date.now();
+            links.forEach(function(link) {
+                if (link.href && !link.href.includes('?v=')) {
+                    link.href = link.href + timestamp;
+                }
+                if (link.src && !link.src.includes('?v=')) {
+                    link.src = link.src + timestamp;
+                }
+            });
+        });
+
+        // Error handling to prevent white screen
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+            if (!document.querySelector('#error-fallback')) {
+                document.body.innerHTML = '<div id="error-fallback" style="padding:20px;text-align:center;font-family:Arial;"><h2>🔧 בעיה זמנית באתר</h2><p>נקה Cache: Ctrl+Shift+R</p><button onclick="location.reload(true)" style="padding:10px 20px;font-size:16px;">רענן עמוד</button></div>';
+            }
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled Promise Rejection:', e.reason);
+        });
+
+        // Aggressive cache prevention
+        var meta = document.createElement('meta');
+        meta.httpEquiv = 'Cache-Control';
+        meta.content = 'no-cache, no-store, must-revalidate';
+        document.head.appendChild(meta);
+
+        var meta2 = document.createElement('meta');
+        meta2.httpEquiv = 'Pragma';
+        meta2.content = 'no-cache';
+        document.head.appendChild(meta2);
+
+        var meta3 = document.createElement('meta');
+        meta3.httpEquiv = 'Expires';
+        meta3.content = '0';
+        document.head.appendChild(meta3);
+
+        // Force timestamp on all resources
+        var timestamp = Date.now();
+        document.addEventListener('DOMContentLoaded', function() {
+            var scripts = document.querySelectorAll('script[src]');
+            var links = document.querySelectorAll('link[href]');
+
+            scripts.forEach(function(script) {
+                if (!script.src.includes('?')) {
+                    script.src += '?v=' + timestamp;
+                } else {
+                    script.src += '&v=' + timestamp;
+                }
+            });
+
+            links.forEach(function(link) {
+                if (!link.href.includes('?')) {
+                    link.href += '?v=' + timestamp;
+                } else {
+                    link.href += '&v=' + timestamp;
+                }
+            });
+        });
+
+        // Clear all possible caches
+        if ('caches' in window) {
+            caches.keys().then(function(names) {
+                names.forEach(function(name) {
+                    caches.delete(name);
+                });
+            });
+        }
+
+        try {
+            localStorage.clear();
+            sessionStorage.clear();
+            if (window.indexedDB) {
+                var deleteReq = indexedDB.deleteDatabase('keyval-store');
+            }
+        } catch (e) {}
+
+        // Auto-refresh if stuck
+        setTimeout(function() {
+            if (!document.querySelector('[data-reactroot], #root > *, .MuiContainer-root')) {
+                console.log('App not loaded, forcing refresh...');
+                window.location.replace(window.location.href.split('?')[0] + '?t=' + Date.now());
+            }
+        }, 3000);
+    </script>
+</head>
+
+<body>
+    <div id="root">
+        <div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial;">
+            <div style="text-align:center;">
+                <div style="font-size:24px;margin-bottom:10px;">🔄</div>
+                <div>טוען...</div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: crm_db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: crm_database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - crm-network
+
+  backend:
+    build: ./backend
+    container_name: crm_backend
+    restart: always # חשוב: זה גורם לו לנסות לעלות שוב אם הוא נופל
+    depends_on:
+      - db
+    ports:
+      - "3001:3000"  # חשיפת הבקאנד לפורט 3001
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: myuser
+      DB_PASS: mypassword
+      DB_NAME: crm_database
+      # Email Configuration - עדכן את הפרטים האלה לפי הצורך
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 587
+      SMTP_SECURE: "false"
+      SMTP_USER: turbh11@gmail.com
+      SMTP_PASS: mevc juaf gbsk omxm
+      FROM_EMAIL: turbh11@gmail.com
+      FROM_NAME: "חברת הבנייה שלך"
+      COMPANY_NAME: "חברת הבנייה שלך"
+      COMPANY_ADDRESS: "רחוב הראשי 123, תל אביב"
+      COMPANY_PHONE: "03-1234567"
+      COMPANY_EMAIL: "info@company.co.il"
+    volumes:
+      - ./uploads_data:/app/uploads        # מיפוי לקבצים פנימיים
+      - ./CRM_Files:/app/crm_export        # מיפוי לייצוא למחשב
+    networks:
+      - crm-network
+      
+  frontend:
+    build: ./frontend
+    container_name: crm_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - crm-network
+
+  # --- שירות הגיבוי החדש ---
+  backup:
+    image: prodrigestivill/postgres-backup-local
+    container_name: crm_backup
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - ./backups:/backups # כאן הגיבויים יישמרו במחשב שלך!
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=crm_database
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_EXTRA_OPTS=-Z9 --schema=public # כיווץ מקסימלי
+      - SCHEDULE=@weekly # תדירות: שבועי. אפשר לשנות ל-@daily
+      - BACKUP_KEEP_WEEKS=4 # כמה שבועות לשמור אחורה לפני מחיקה
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - crm-network
+
+volumes:
+  postgres_data:
+  uploads_data:
+
+networks:
+  crm-network:
