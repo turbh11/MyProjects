@@ -1,9 +1,3 @@
-החלטה מצוינת. להשאיר את ה-README נקי וממוקד כשיש מחברת מוכנה (Notebook) זו הדרך הכי מקצועית ונכונה לנהל פרויקט ב-GitHub.
-
-הנה הגרסה המעודכנת באנגלית: הסרתי את גוש הקוד הארוך, הוספתי הסבר ברור על יצירת התיקייה בדרייב והכנסת קבצי ה-MP3 לשם מראש, ופישטתי את ההוראות כך שיסבירו איך להריץ את המחברת שצירפת.
-
----
-
 # Hebrew Transcriber 🎧🇮🇱
 
 A Python-based tool for automated batch transcription of long Hebrew audio files. This project utilizes the advanced `whisper-large-v3` model by the **ivrit.ai** community. It is specifically optimized for free cloud environments like Google Colab, addressing Out-Of-Memory (OOM) challenges and managing long runtime sessions.
