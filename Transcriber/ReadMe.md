@@ -4,7 +4,7 @@ A Python-based tool for automated batch transcription of long Hebrew audio files
 
 ## Features
 
-* **GPU Memory Optimization:** Utilizes `torch.float16` to halve memory consumption and prevent Out of Memory (OOM) errors when loading the large model.
+* **GPU Memory Optimization:** Utilizes `torch.float16` to halve memory consumption and prevent Out of Memory errors when loading the large model.
 * **Long Audio Handling:** Implements 30-second chunking behind the scenes to prevent model "hallucinations" and infinite text loops.
 * **Smart Resume/Bypass Mechanism:** Automatically scans the target directory and skips already transcribed files, allowing for seamless resumption if the server disconnects.
 * **Seamless Google Drive Integration:** Reads audio files directly from the cloud and saves outputs (TXT and JSON with timestamps) in the same directory.
